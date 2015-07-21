@@ -3,6 +3,8 @@ package com.borrowedhour.purcell.swing.controller;
 import com.borrowedhour.purcell.swing.gui.FormEvent;
 import com.borrowedhour.purcell.swing.model.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -63,6 +65,14 @@ public class Controller {
         Person person = new Person(name, occupation, ageCat, empCat, taxId, isUsCitizen, gender1);
 
         db.addPerson(person);
-        System.out.println("Added to db: "+person.toString());
+        System.out.println("In Controller: Added to db: " + person.toString());
+    }
+
+    public void saveToFile(File file) throws IOException {
+        db.saveToFile(file);
+    }
+
+    public void loadFromFile(File file) throws IOException {
+        db.loadFromFile(file);
     }
 }

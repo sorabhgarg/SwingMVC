@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 /**
  * Created by borrowedhour on 7/18/15.
@@ -39,6 +40,8 @@ public class MainFrame extends JFrame {
 
         setJMenuBar(createMenuBar());
 
+        tablePanel.setData(controller.getPeople());
+
         toolbar.setStringListener(new StringListener() {
             public void stringEmitted(String s) {
                 textPanel.appendText(s);
@@ -60,6 +63,7 @@ public class MainFrame extends JFrame {
 //                        usCitizen+" : "+gender+"\n");
 
                 controller.addPerson(ev);
+                tablePanel.refresh();
             }
         });
 
@@ -121,8 +125,8 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 //Adding Message Box
-                int option = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?", "Confirm Exit",
-                        JOptionPane.OK_CANCEL_OPTION);
+                int option = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?",
+                        "Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
                 if (option == JOptionPane.OK_OPTION) {
                     System.exit(0);
                 }
@@ -132,8 +136,15 @@ public class MainFrame extends JFrame {
         exportDataItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println(fileChooser.getSelectedFile());
+                if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+                    System.out.println("Saving to file: " + fileChooser.getSelectedFile());
+                    try {
+                        controller.saveToFile(fileChooser.getSelectedFile());
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(MainFrame.this, "Could not save to file", "Saving Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
@@ -141,8 +152,17 @@ public class MainFrame extends JFrame {
         importDataItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(fileChooser.showSaveDialog(MainFrame.this)==JFileChooser.APPROVE_OPTION){
-                    System.out.println(fileChooser.getSelectedFile());
+                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+                    System.out.println("Importing the data from: " + fileChooser.getSelectedFile());
+
+                    try {
+                        controller.loadFromFile(fileChooser.getSelectedFile());
+                        tablePanel.refresh();
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(MainFrame.this, "Could not load file", "Loading error",
+                                JOptionPane.ERROR_MESSAGE);
+                        e1.printStackTrace();
+                    }
                 }
             }
         });

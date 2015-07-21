@@ -1,9 +1,11 @@
 package com.borrowedhour.purcell.swing.model;
 
+import java.io.Serializable;
+
 /**
  * Created by borrowedhour on 7/20/15.
  */
-public class Person {
+public class Person implements Serializable {
 
     private static int count = 0;
 
