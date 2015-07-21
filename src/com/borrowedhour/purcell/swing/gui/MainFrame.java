@@ -1,6 +1,6 @@
 package com.borrowedhour.purcell.swing.gui;
 
-import com.borrowedhour.purcell.swing.com.borrowedhour.purcell.swing.controller.Controller;
+import com.borrowedhour.purcell.swing.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +16,7 @@ public class MainFrame extends JFrame {
     private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
+    private TablePanel tablePanel;
     private Controller controller;
 
     public MainFrame() {
@@ -23,7 +24,7 @@ public class MainFrame extends JFrame {
 
         setVisible(true);
         setSize(600, 500);
-        setMinimumSize(new Dimension(500,400)); //this sets the minimum size that it can be minimized to,
+        setMinimumSize(new Dimension(500, 400)); //this sets the minimum size that it can be minimized to,
                                                 // before it distorts the window to an upgly size.
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -32,6 +33,10 @@ public class MainFrame extends JFrame {
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
+        tablePanel = new TablePanel();
+
+        controller = new Controller();
+
         setJMenuBar(createMenuBar());
 
         toolbar.setStringListener(new StringListener() {
@@ -58,7 +63,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        add(textPanel, BorderLayout.CENTER);
+        add(tablePanel, BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
         add(formPanel, BorderLayout.WEST);
     }

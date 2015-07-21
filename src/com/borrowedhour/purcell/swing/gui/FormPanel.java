@@ -83,8 +83,8 @@ public class FormPanel extends JPanel {
 
         //Setting gender radio buttons
 
-        maleRadio = new JRadioButton("Male");
-        femaleRadio = new JRadioButton("Female");
+        maleRadio = new JRadioButton("male");
+        femaleRadio = new JRadioButton("female");
         genderGroup = new ButtonGroup();
 
         genderGroup.add(maleRadio);
